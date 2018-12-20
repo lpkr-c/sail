@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"image/color"
-	"math/rand"
 
 	"github.com/devinmcgloin/clr/clr"
 	"github.com/devinmcgloin/generative-go/pkg/canvas"
@@ -16,10 +15,7 @@ func main() {
 	context := gg.NewContext(1400, 900)
 	var rows = 10.0
 	var margin = 0.05
-	dotFiller := fill.DotFiller{
-		N:    8000,
-		Rand: rand.New(rand.NewSource(42)),
-	}
+	filler := fill.NewUniformFiller(8000, 42)
 	context.SetColor(color.White)
 	context.DrawRectangle(0, 0, 1400, 900)
 	context.Fill()
@@ -40,7 +36,7 @@ func main() {
 		context.SetRGB(float64(r), float64(g), float64(b))
 
 		fmt.Printf("%+v R: %d, G: %d, B: %d\n", rect, r, g, b)
-		dotFiller.FillRectangle(context, rect)
+		filler.DotFill(context, rect)
 	}
 	context.SavePNG("out.png")
 }
