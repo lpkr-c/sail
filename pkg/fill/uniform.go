@@ -12,14 +12,13 @@ import (
 type UniformFiller struct {
 	N    int
 	rand *rand.Rand
-	Seed int64
 }
 
-func NewUniformFiller(n int, seed int64) *UniformFiller {
+func NewUniformFiller(n int, r *rand.Rand) *UniformFiller {
 	return &UniformFiller{
 		N:    n,
-		rand: rand.New(rand.NewSource(seed)),
-		Seed: seed}
+		rand: r,
+	}
 }
 
 // DotFill takes any shape that implements Fillable and samples random points inside the shape

@@ -1,7 +1,6 @@
 package sampling
 
 import (
-	"fmt"
 	"image/color"
 	"math"
 	"math/rand"
@@ -13,15 +12,18 @@ import (
 	"github.com/fogleman/gg"
 )
 
-type RectangleDot interface{}
+type RectangleDot struct{}
 
-func (c RectangleDot) Draw(context *gg.Context, r rand.Source) {
+func (c RectangleDot) Dimensions() (int, int) {
+	return 1400, 900
+}
+
+func (c RectangleDot) Draw(context *gg.Context, r *rand.Rand) {
 	rows := 1 + math.Floor(r.Float64()*15)
 	margin := r.Float64() * 0.10
 	hue := uint16(r.Intn(365))
 
-	fmt.Printf("Seed: %d Rows: %f Margin: %f Hue: %d\n", seed, rows, margin, hue)
-	filler := fill.NewUniformFiller(8000, seed)
+	filler := fill.NewUniformFiller(8000, r)
 	context.SetColor(color.White)
 	context.DrawRectangle(0, 0, 1400, 900)
 	context.Fill()

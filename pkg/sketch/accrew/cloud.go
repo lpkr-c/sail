@@ -7,9 +7,13 @@ import (
 	"github.com/fogleman/gg"
 )
 
-type Cloud interface{}
+type Cloud struct{}
 
-func (c Cloud) Draw(context *gg.Context, rand rand.Source) {
+func (c Cloud) Dimensions() (int, int) {
+	return 800, 1400
+}
+
+func (c Cloud) Draw(context *gg.Context, rand *rand.Rand) {
 	rows := rand.Float64() * 200
 	hue := uint16(rand.Intn(365))
 	growthFactor := rand.Float64() * 50
