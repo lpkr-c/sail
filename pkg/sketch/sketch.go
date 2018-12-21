@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"image/color"
 	"math/rand"
+	"os"
 	"time"
 
 	"github.com/devinmcgloin/sail/pkg/sketch/accrew"
+	"github.com/devinmcgloin/sail/pkg/sketch/primitives"
 	"github.com/devinmcgloin/sail/pkg/sketch/sampling"
 	"github.com/fogleman/gg"
 )
@@ -31,6 +33,8 @@ func lookup(id string) (Renderer, error) {
 		return accrew.Cloud{}, nil
 	case "sampling/rectangle":
 		return sampling.RectangleDot{}, nil
+	case "primitive/rotated-lines":
+		return primitives.RotatedLines{}, nil
 	default:
 		return nil, errors.New("SketchID not found")
 	}
@@ -71,6 +75,14 @@ func RunWithSeed(renderer Renderer, context *gg.Context, config Config) error {
 	clearBackground(context)
 
 	renderer.Draw(context, rand)
+
+	dir := fmt.Sprintf("./sketches/%s", config.SketchID)
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		err = os.MkdirAll(dir, 0755)
+		if err != nil {
+			panic(err)
+		}
+	}
 	path := fmt.Sprintf("./sketches/%s/%d-sketch.png", config.SketchID, config.Seed)
 	fmt.Printf("Saving to: %s\n", path)
 	return context.SavePNG(path)
