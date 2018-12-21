@@ -4,7 +4,7 @@ import (
 	"math"
 	"math/rand"
 
-	"github.com/devinmcgloin/generative-go/pkg/shapes"
+	"github.com/devinmcgloin/sail/pkg/shapes"
 	"github.com/fogleman/gg"
 )
 

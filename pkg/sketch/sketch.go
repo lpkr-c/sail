@@ -7,8 +7,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/devinmcgloin/generative-go/pkg/sketch/accrew"
-	"github.com/devinmcgloin/generative-go/pkg/sketch/sampling"
+	"github.com/devinmcgloin/sail/pkg/sketch/accrew"
+	"github.com/devinmcgloin/sail/pkg/sketch/sampling"
 	"github.com/fogleman/gg"
 )
 

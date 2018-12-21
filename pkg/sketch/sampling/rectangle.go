@@ -6,9 +6,9 @@ import (
 	"math/rand"
 
 	"github.com/devinmcgloin/clr/clr"
-	"github.com/devinmcgloin/generative-go/pkg/canvas"
-	"github.com/devinmcgloin/generative-go/pkg/fill"
-	"github.com/devinmcgloin/generative-go/pkg/shapes"
+	"github.com/devinmcgloin/sail/pkg/canvas"
+	"github.com/devinmcgloin/sail/pkg/fill"
+	"github.com/devinmcgloin/sail/pkg/shapes"
 	"github.com/fogleman/gg"
 )
 

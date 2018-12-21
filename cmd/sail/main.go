@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/devinmcgloin/generative-go/pkg/sketch"
+	"github.com/devinmcgloin/sail/pkg/sketch"
 )
 
 func main() {
