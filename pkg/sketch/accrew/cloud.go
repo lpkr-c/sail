@@ -1,24 +1,19 @@
-package main
+package accrew
 
 import (
-	"fmt"
-	"image/color"
 	"math/rand"
-	"time"
 
 	"github.com/devinmcgloin/clr/clr"
 	"github.com/fogleman/gg"
 )
 
-func main() {
-	seed := time.Now().Unix()
-	rand := rand.New(rand.NewSource(seed))
+type Cloud struct{}
 
-	context := gg.NewContext(800, 1400)
-	context.SetColor(color.White)
-	context.DrawRectangle(0, 0, 800, 1400)
-	context.Fill()
+func (c Cloud) Dimensions() (int, int) {
+	return 800, 1400
+}
 
+func (c Cloud) Draw(context *gg.Context, rand *rand.Rand) {
 	rows := rand.Float64() * 200
 	hue := uint16(rand.Intn(365))
 	growthFactor := rand.Float64() * 50
@@ -39,8 +34,5 @@ func main() {
 			accrew[i] += incBy
 		}
 	}
-	err := context.SavePNG(fmt.Sprintf("./sketches/cloud-lines/%d-sketch.png", seed))
-	if err != nil {
-		fmt.Println(err)
-	}
+
 }
