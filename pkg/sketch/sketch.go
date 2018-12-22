@@ -31,8 +31,14 @@ func lookup(id string) (Renderer, error) {
 	switch id {
 	case "accrew/clouds":
 		return accrew.Cloud{}, nil
-	case "sampling/rectangle":
-		return sampling.RectangleDot{}, nil
+	case "sampling/uniform-rectangle":
+		return sampling.UniformRectangleDot{}, nil
+	case "sampling/radial-rectangle":
+		return sampling.RadialRectangleDot{}, nil
+	case "primitive/line-coloring":
+		return primitives.LineColoring{}, nil
+	case "primitive/bars":
+		return primitives.Bars{}, nil
 	case "primitive/rotated-lines":
 		return primitives.RotatedLines{}, nil
 	default:
@@ -59,12 +65,12 @@ func Run(config Config) error {
 			return err
 		}
 	} else {
+		config.Seed = time.Now().Unix()
 		for x := 0; x < config.Iterations; x++ {
-			config.Seed = time.Now().Unix()
 			if err := RunWithSeed(renderer, context, config); err != nil {
 				return err
 			}
-			time.Sleep(time.Second)
+			config.Seed++
 		}
 	}
 	return nil
