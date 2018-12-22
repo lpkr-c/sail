@@ -1,48 +1,70 @@
 package primitives
 
 import (
+	"fmt"
 	"image/color"
+	"math"
 	"math/rand"
 
 	"github.com/fogleman/gg"
 )
 
-func drawRectangle(c *gg.Context, x, y float64, noise float64, size float64) {
-}
-
+//FallingRectangles defines the sketch type
 type FallingRectangles struct{}
 
-func (rg FallingRectangles) Dimensions() (int, int) {
-	return int(rg.Width()), int(rg.Height())
+// Dimensions returns the size of the sketch in integers
+func (fr FallingRectangles) Dimensions() (int, int) {
+	return int(fr.Width()), int(fr.Height())
 }
 
-func (rg FallingRectangles) Width() float64 {
+// Width helper for finding the width of the canvas
+func (fr FallingRectangles) Width() float64 {
 	return 800.0
 }
-func (rg FallingRectangles) Height() float64 {
+
+// Height helper for finding the hieght of the canvas
+func (fr FallingRectangles) Height() float64 {
 	return 1300.0
 }
 
+// Draw is the primary rendering method
 func (fr FallingRectangles) Draw(context *gg.Context, rand *rand.Rand) {
 	margin := rand.Float64()*200 + 10
 
 	avaliableSpace := fr.Width() - margin*2
-	columns := rand.Float64()*25 + 5
-	noiseFactor := rand.Float64()*200 + 1
-	boxSize := avaliableSpace / columns
+	sizeFactor := math.Floor(rand.Float64()*25 + 5)
+	noiseFactor := rand.Float64()*50 + 1
+	boxSize := avaliableSpace / sizeFactor
+	halfBox := boxSize / 2
 
+	context.SetLineWidth(1)
 	context.SetColor(color.Black)
 
-	for x := margin; x < fr.Width()-margin; x += boxSize {
+	fmt.Printf("\tMargin: %f\n\tAvaliableSpace: %f\n\tsizeFactor: %f\n\tboxSize: %f\n", margin, avaliableSpace, sizeFactor, boxSize)
+
+	x := margin + halfBox
+
+	for ; x < fr.Width()-margin; x += boxSize {
 		rowIndex := 0.0
-		for y := margin; y < fr.Height()-margin; y += boxSize {
+		for y := margin + halfBox; y < fr.Height()-margin; y += boxSize {
 			rotated := rand.Float64() * rowIndex / noiseFactor
 			context.Push()
 			context.RotateAbout(rotated, x, y)
-			context.DrawRectangle(x, y, boxSize, boxSize)
+			context.DrawRectangle(x-halfBox, y-halfBox, boxSize, boxSize)
 			context.Stroke()
 			context.Pop()
 			rowIndex++
 		}
 	}
+
+	fmt.Printf("\tx: %f max: %f\n", x, fr.Width()-margin+halfBox)
+}
+
+func drawAbsRect(dc *gg.Context, x1, y1, x2, y2 float64) {
+	dc.NewSubPath()
+	dc.MoveTo(x1, y1)
+	dc.LineTo(x2, y1)
+	dc.LineTo(x2, y2)
+	dc.LineTo(x1, y2)
+	dc.ClosePath()
 }

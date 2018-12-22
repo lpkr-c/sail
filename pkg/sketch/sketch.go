@@ -79,6 +79,10 @@ func Run(config Config) error {
 }
 
 func RunWithSeed(renderer Renderer, context *gg.Context, config Config) error {
+	fmt.Printf("Rendering: %T\n", renderer)
+	fmt.Printf("\tSeed: %d\n", config.Seed)
+	x, y := renderer.Dimensions()
+	fmt.Printf("\tDimensions %dx%d\n", x, y)
 	rand := rand.New(rand.NewSource(config.Seed))
 	clearBackground(context)
 
@@ -92,6 +96,6 @@ func RunWithSeed(renderer Renderer, context *gg.Context, config Config) error {
 		}
 	}
 	path := fmt.Sprintf("./sketches/%s/%d-sketch.png", config.SketchID, config.Seed)
-	fmt.Printf("Saving to: %s\n", path)
+	fmt.Printf("\tSaving to: %s\n", path)
 	return context.SavePNG(path)
 }
