@@ -41,6 +41,8 @@ func lookup(id string) (Renderer, error) {
 		return primitives.Bars{}, nil
 	case "primitive/rotated-lines":
 		return primitives.RotatedLines{}, nil
+	case "primitive/falling-rectangles":
+		return primitives.FallingRectangles{}, nil
 	default:
 		return nil, errors.New("SketchID not found")
 	}
