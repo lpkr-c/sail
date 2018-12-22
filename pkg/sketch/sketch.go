@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"image/color"
 	"math/rand"
+	"os"
 	"time"
 
 	"github.com/devinmcgloin/sail/pkg/sketch/accrew"
+	"github.com/devinmcgloin/sail/pkg/sketch/primitives"
 	"github.com/devinmcgloin/sail/pkg/sketch/sampling"
 	"github.com/fogleman/gg"
 )
@@ -29,8 +31,18 @@ func lookup(id string) (Renderer, error) {
 	switch id {
 	case "accrew/clouds":
 		return accrew.Cloud{}, nil
-	case "sampling/rectangle":
-		return sampling.RectangleDot{}, nil
+	case "sampling/uniform-rectangle":
+		return sampling.UniformRectangleDot{}, nil
+	case "sampling/radial-rectangle":
+		return sampling.RadialRectangleDot{}, nil
+	case "primitive/line-coloring":
+		return primitives.LineColoring{}, nil
+	case "primitive/bars":
+		return primitives.Bars{}, nil
+	case "primitive/rotated-lines":
+		return primitives.RotatedLines{}, nil
+	case "primitive/falling-rectangles":
+		return primitives.FallingRectangles{}, nil
 	default:
 		return nil, errors.New("SketchID not found")
 	}
@@ -55,12 +67,12 @@ func Run(config Config) error {
 			return err
 		}
 	} else {
+		config.Seed = time.Now().Unix()
 		for x := 0; x < config.Iterations; x++ {
-			config.Seed = time.Now().Unix()
 			if err := RunWithSeed(renderer, context, config); err != nil {
 				return err
 			}
-			time.Sleep(time.Second)
+			config.Seed++
 		}
 	}
 	return nil
@@ -71,6 +83,14 @@ func RunWithSeed(renderer Renderer, context *gg.Context, config Config) error {
 	clearBackground(context)
 
 	renderer.Draw(context, rand)
+
+	dir := fmt.Sprintf("./sketches/%s", config.SketchID)
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		err = os.MkdirAll(dir, 0755)
+		if err != nil {
+			panic(err)
+		}
+	}
 	path := fmt.Sprintf("./sketches/%s/%d-sketch.png", config.SketchID, config.Seed)
 	fmt.Printf("Saving to: %s\n", path)
 	return context.SavePNG(path)
