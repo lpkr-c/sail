@@ -33,7 +33,7 @@ func (fr FallingRectangles) Draw(context *gg.Context, rand *rand.Rand) {
 
 	avaliableSpace := fr.Width() - margin*2
 	sizeFactor := math.Floor(rand.Float64()*25 + 5)
-	noiseFactor := rand.Float64()*50 + 1
+	noiseFactor := rand.Float64() * 2
 	boxSize := avaliableSpace / sizeFactor
 	halfBox := boxSize / 2
 
@@ -42,22 +42,20 @@ func (fr FallingRectangles) Draw(context *gg.Context, rand *rand.Rand) {
 
 	fmt.Printf("\tMargin: %f\n\tAvaliableSpace: %f\n\tsizeFactor: %f\n\tboxSize: %f\n", margin, avaliableSpace, sizeFactor, boxSize)
 
-	x := margin + halfBox
-
-	for ; x < fr.Width()-margin; x += boxSize {
+	for x := margin + halfBox; x < fr.Width()-margin; x += boxSize {
 		rowIndex := 0.0
 		for y := margin + halfBox; y < fr.Height()-margin; y += boxSize {
-			rotated := rand.Float64() * rowIndex / noiseFactor
+			normalizedNoise := (rowIndex / (fr.Width() - margin)) * (noiseFactor * 10)
+			rotate := normalizedNoise * rand.NormFloat64()
 			context.Push()
-			context.RotateAbout(rotated, x, y)
+			context.RotateAbout(rotate, x, y)
+			context.Translate(rand.Float64()*rowIndex*noiseFactor, rand.Float64()*rowIndex*noiseFactor)
 			context.DrawRectangle(x-halfBox, y-halfBox, boxSize, boxSize)
 			context.Stroke()
 			context.Pop()
 			rowIndex++
 		}
 	}
-
-	fmt.Printf("\tx: %f max: %f\n", x, fr.Width()-margin+halfBox)
 }
 
 func drawAbsRect(dc *gg.Context, x1, y1, x2, y2 float64) {

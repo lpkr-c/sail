@@ -2,6 +2,7 @@ package primitives
 
 import (
 	"image/color"
+	"math"
 	"math/rand"
 
 	"github.com/devinmcgloin/clr/clr"
@@ -15,7 +16,7 @@ func (rl RotatedLines) Dimensions() (int, int) {
 }
 
 func (rl RotatedLines) Draw(context *gg.Context, rand *rand.Rand) {
-	rows := rand.Float64() * 200
+	rows := math.Floor(rand.Float64() * 200)
 	margin := rand.Float64()*200 + 10
 	noiseFactor := rand.Float64() * 10
 	hue := uint16(rand.Intn(365))
@@ -27,8 +28,8 @@ func (rl RotatedLines) Draw(context *gg.Context, rand *rand.Rand) {
 	context.SetLineWidth(rand.Float64() * spacing)
 	context.Identity()
 
-	for x := margin; x < 1000-margin; x += spacing {
-		for y := margin; y < 1000-margin; y += spacing {
+	for x := margin; x <= 1000-margin; x += spacing {
+		for y := margin; y <= 1000-margin; y += spacing {
 			context.Push()
 			n := (rand.Float64()*2 - 1) * noiseFactor
 			r, g, b := clr.HSV{H: hue, S: uint8(n), V: 70}.RGB()
