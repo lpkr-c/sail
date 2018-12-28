@@ -67,10 +67,14 @@ func (f UniformFiller) DotFill(canvas *gg.Context, shape shapes.Fillable) {
 		center := shape.Center()
 		radius := shape.Radius()
 
-		r := (f.rand.Float64() * radius) * (1 / 2 * math.Pi)
-		theta := f.rand.NormFloat64() * radius
-		xDiff := r * math.Cos(theta)
-		yDiff := r * math.Sin(theta)
+		phi := f.rand.Float64() * 2 * math.Pi
+		cosTheta := f.rand.NormFloat64()
+		u := f.rand.Float64()
+
+		theta := math.Acos(cosTheta)
+		r := radius * math.Pow(u, 1.0/3.0)
+		xDiff := r * math.Sin(theta) * math.Cos(phi)
+		yDiff := r * math.Sin(theta) * math.Sin(phi)
 		p := shapes.Point{X: center.X + xDiff, Y: center.Y + yDiff}
 		if shape.Inside(p) {
 			pointsPlaced++

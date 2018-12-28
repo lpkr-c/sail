@@ -92,7 +92,7 @@ func RunWithSeed(renderer Renderer, context *gg.Context, config Config) error {
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
 		err = os.MkdirAll(dir, 0755)
 		if err != nil {
-			panic(err)
+			return err
 		}
 	}
 	path := fmt.Sprintf("./sketches/%s/%d-sketch.png", config.SketchID, config.Seed)

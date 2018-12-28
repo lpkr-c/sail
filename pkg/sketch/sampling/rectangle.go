@@ -1,7 +1,7 @@
 package sampling
 
 import (
-	"image/color"
+	"fmt"
 	"math"
 	"math/rand"
 
@@ -20,14 +20,11 @@ func (c UniformRectangleDot) Dimensions() (int, int) {
 }
 
 func (c UniformRectangleDot) Draw(context *gg.Context, r *rand.Rand) {
-	rows := 1 + math.Floor(r.Float64()*15)
+	rows := 1 + math.Floor(r.Float64()*9)
 	margin := r.Float64() * 0.10
 	hue := uint16(r.Intn(365))
 
 	filler := fill.NewUniformFiller(8000, r)
-	context.SetColor(color.White)
-	context.DrawRectangle(0, 0, 1400, 900)
-	context.Fill()
 
 	for i := 0.0; i < rows; i++ {
 		rect := shapes.Rectangle{
@@ -41,7 +38,9 @@ func (c UniformRectangleDot) Draw(context *gg.Context, r *rand.Rand) {
 			},
 		}
 
-		r, g, b := clr.HSV{H: hue, S: uint8(i * 7), V: 70}.RGB()
+		hsv := clr.HSV{H: hue, S: 60, V: uint8(20 + i*(80.0/(rows-1)))}
+		fmt.Printf("\tRow Color: %+v\n", hsv)
+		r, g, b := hsv.RGB()
 		context.SetRGB(float64(r), float64(g), float64(b))
 
 		filler.DotFill(context, rect)
@@ -61,9 +60,6 @@ func (c RadialRectangleDot) Draw(context *gg.Context, r *rand.Rand) {
 	hue := uint16(r.Intn(365))
 
 	filler := fill.NewRadialFiller(8000, r)
-	context.SetColor(color.White)
-	context.DrawRectangle(0, 0, 1400, 900)
-	context.Fill()
 
 	for i := 0.0; i < rows; i++ {
 		rect := shapes.Rectangle{
