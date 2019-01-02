@@ -1,6 +1,8 @@
 package shapes
 
-import "math"
+import (
+	"math"
+)
 
 func abs(a float64) float64 {
 	if a < 0 {
@@ -50,6 +52,13 @@ func (rect Rectangle) Radius() float64 {
 
 func (rect Rectangle) Inside(p Point) bool {
 	return rect.A.X <= p.X && p.X <= rect.B.X && rect.A.Y <= p.Y && p.Y <= rect.B.Y
+}
+
+func (rect *Rectangle) ShrinkHorizontally(factor float64) {
+	newRange := (rect.B.X - rect.A.X) * factor
+	adjustment := newRange / 2.0
+	rect.A.X += adjustment
+	rect.B.X -= adjustment
 }
 
 type Triangle struct {

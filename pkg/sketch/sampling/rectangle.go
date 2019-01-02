@@ -12,8 +12,7 @@ import (
 	"github.com/fogleman/gg"
 )
 
-type UniformRectangleDot struct {
-}
+type UniformRectangleDot struct{}
 
 func (c UniformRectangleDot) Dimensions() (int, int) {
 	return 1400, 900
@@ -22,7 +21,10 @@ func (c UniformRectangleDot) Dimensions() (int, int) {
 func (c UniformRectangleDot) Draw(context *gg.Context, r *rand.Rand) {
 	rows := 1 + math.Floor(r.Float64()*9)
 	margin := r.Float64() * 0.10
-	hue := uint16(r.Intn(365))
+	startHue := uint16(r.Intn(365))
+	endHue := uint16(r.Intn(365))
+	gaps := r.Float64() * 0.5
+	fmt.Printf("\tGapFactor: %f\n", gaps)
 
 	filler := fill.NewUniformFiller(8000, r)
 
@@ -34,12 +36,13 @@ func (c UniformRectangleDot) Draw(context *gg.Context, r *rand.Rand) {
 			},
 			B: shapes.Point{
 				X: canvas.W(context, rectangePositioning(margin, 1+i, rows)),
-				Y: canvas.H(context, 1-margin),
+				Y: canvas.H(context, 1.0-margin),
 			},
 		}
 
-		hsv := clr.HSV{H: hue, S: 60, V: uint8(20 + i*(80.0/(rows-1)))}
-		fmt.Printf("\tRow Color: %+v\n", hsv)
+		rect.ShrinkHorizontally(gaps)
+
+		hsv := clr.HSV{H: startHue + uint16(float64(endHue)/(rows-1)*i), S: 60, V: uint8(20 + i*(80.0/(rows-1)))}
 		r, g, b := hsv.RGB()
 		context.SetRGB(float64(r), float64(g), float64(b))
 
@@ -58,6 +61,9 @@ func (c RadialRectangleDot) Draw(context *gg.Context, r *rand.Rand) {
 	rows := 1 + math.Floor(r.Float64()*15)
 	margin := r.Float64() * 0.10
 	hue := uint16(r.Intn(365))
+	gaps := r.Float64()
+
+	fmt.Printf("\tGapFactor: %f\n", gaps)
 
 	filler := fill.NewRadialFiller(8000, r)
 
@@ -69,9 +75,10 @@ func (c RadialRectangleDot) Draw(context *gg.Context, r *rand.Rand) {
 			},
 			B: shapes.Point{
 				X: canvas.W(context, rectangePositioning(margin, 1+i, rows)),
-				Y: canvas.H(context, 1-margin),
+				Y: canvas.H(context, 1.0-margin),
 			},
 		}
+		rect.ShrinkHorizontally(gaps)
 
 		r, g, b := clr.HSV{H: hue, S: uint8(i * 7), V: 70}.RGB()
 		context.SetRGB(float64(r), float64(g), float64(b))
@@ -79,7 +86,8 @@ func (c RadialRectangleDot) Draw(context *gg.Context, r *rand.Rand) {
 		filler.Fill(context, rect)
 	}
 }
+
 func rectangePositioning(offset, index, rectangeCount float64) float64 {
 	avaliableSpace := 1.0 - offset*2
-	return offset + index*(avaliableSpace/rectangeCount)
+	return (offset + index*(avaliableSpace/rectangeCount))
 }
