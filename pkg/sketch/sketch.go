@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/devinmcgloin/sail/pkg/sketch/accrew"
+	"github.com/devinmcgloin/sail/pkg/sketch/delaunay"
 	"github.com/devinmcgloin/sail/pkg/sketch/primitives"
 	"github.com/devinmcgloin/sail/pkg/sketch/sampling"
 	"github.com/fogleman/gg"
@@ -31,6 +32,8 @@ func lookup(id string) (Renderer, error) {
 	switch id {
 	case "accrew/clouds":
 		return accrew.Cloud{}, nil
+	case "delaunay/ring":
+		return delaunay.Ring{}, nil
 	case "sampling/uniform-rectangle":
 		return sampling.UniformRectangleDot{}, nil
 	case "sampling/radial-rectangle":
