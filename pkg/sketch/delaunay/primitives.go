@@ -52,6 +52,42 @@ func (c Ring) Draw(context *gg.Context, rand *rand.Rand) {
 	renderDelaunay(context, triangulation, pointLocations)
 }
 
+// Mesh defines a delaunay sketch that generates a non uniform mesh
+type Mesh struct{}
+
+// Dimensions returns the dimensions of the sketch
+func (m Mesh) Dimensions() (int, int) {
+	return 1500, 1500
+}
+
+// Draw handles all the fundamental drawing logic
+func (m Mesh) Draw(context *gg.Context, rand *rand.Rand) {
+	points := int(rand.Float64() * 600)
+	hue := uint16(rand.Intn(365))
+	xBias := rand.Float64()
+	yBias := rand.Float64()
+
+	fmt.Printf("\tpoints: %d\n", points)
+	fmt.Printf("\thue: %d\n", hue)
+
+	pointLocations := make([]delaunay.Point, points)
+	for i := range pointLocations {
+		xWidth, yWidth := m.Dimensions()
+		x := rand.Float64() * float64(xWidth) * xBias
+		y := rand.Float64() * float64(yWidth) * yBias
+		pointLocations[i] = delaunay.Point{X: x, Y: y}
+	}
+
+	r, g, b := clr.HSV{H: hue, S: 78, V: 70}.RGB()
+	context.SetRGB(float64(r), float64(g), float64(b))
+
+	triangulation, err := delaunay.Triangulate(pointLocations)
+	if err != nil {
+		log.Fatal(err)
+	}
+	renderDelaunay(context, triangulation, pointLocations)
+}
+
 func renderDelaunay(context *gg.Context, triangulation *delaunay.Triangulation, points []delaunay.Point) {
 
 	ts := triangulation.Triangles

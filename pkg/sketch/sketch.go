@@ -34,6 +34,8 @@ func lookup(id string) (Renderer, error) {
 		return accrew.Cloud{}, nil
 	case "delaunay/ring":
 		return delaunay.Ring{}, nil
+	case "delaunay/mesh":
+		return delaunay.Mesh{}, nil
 	case "sampling/uniform-rectangle":
 		return sampling.UniformRectangleDot{}, nil
 	case "sampling/radial-rectangle":
