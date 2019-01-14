@@ -64,21 +64,27 @@ func (m Mesh) Dimensions() (int, int) {
 func (m Mesh) Draw(context *gg.Context, rand *rand.Rand) {
 	points := int(rand.Float64() * 600)
 	hue := uint16(rand.Intn(365))
-	xBias := rand.Float64()
-	yBias := rand.Float64()
+	xDelta := rand.Float64() * 150
+	yDelta := rand.Float64() * 150
+	relocateProbability := rand.NormFloat64()
 
 	fmt.Printf("\tpoints: %d\n", points)
 	fmt.Printf("\thue: %d\n", hue)
 
+	xWidth, yWidth := m.Dimensions()
 	pointLocations := make([]delaunay.Point, points)
+	current := delaunay.Point{X: rand.Float64() * float64(xWidth), Y: rand.Float64() * float64(yWidth)}
 	for i := range pointLocations {
-		xWidth, yWidth := m.Dimensions()
-		x := rand.Float64() * float64(xWidth) * xBias
-		y := rand.Float64() * float64(yWidth) * yBias
+		x := rand.NormFloat64()*xDelta + current.X
+		y := rand.NormFloat64()*yDelta + current.Y
 		pointLocations[i] = delaunay.Point{X: x, Y: y}
+
+		if rand.NormFloat64() < relocateProbability {
+			current = delaunay.Point{X: rand.Float64() * float64(xWidth), Y: rand.Float64() * float64(yWidth)}
+		}
 	}
 
-	r, g, b := clr.HSV{H: hue, S: 78, V: 70}.RGB()
+	r, g, b := clr.HSV{H: hue, S: 78, V: 30}.RGB()
 	context.SetRGB(float64(r), float64(g), float64(b))
 
 	triangulation, err := delaunay.Triangulate(pointLocations)
