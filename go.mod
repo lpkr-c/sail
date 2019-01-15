@@ -20,13 +20,13 @@ require (
 	github.com/koron/iferr v0.0.0-20180615142939-bb332a3b1d91 // indirect
 	github.com/mattn/go-isatty v0.0.4 // indirect
 	github.com/mdempsky/gocode v0.0.0-20181226182234-be056ad32a5e // indirect
+	github.com/mitchellh/go-homedir v1.0.0
 	github.com/nicksnyder/go-i18n v1.10.0 // indirect
-	github.com/pelletier/go-toml v1.2.0 // indirect
 	github.com/peterh/liner v1.1.0 // indirect
 	github.com/rogpeppe/godef v1.1.1 // indirect
 	github.com/sirupsen/logrus v1.3.0 // indirect
-	github.com/spf13/cobra v0.0.3 // indirect
-	github.com/spf13/pflag v1.0.3 // indirect
+	github.com/spf13/cobra v0.0.3
+	github.com/spf13/viper v1.3.1
 	github.com/stamblerre/gocode v0.0.0-20181212030458-2f9d39d8f31d // indirect
 	github.com/zmb3/gogetdoc v0.0.0-20190107174152-de0ca1d07687 // indirect
 	golang.org/x/arch v0.0.0-20181203225421-5a4828bb7045 // indirect
@@ -35,6 +35,6 @@ require (
 	golang.org/x/sys v0.0.0-20190109145017-48ac38b7c8cb // indirect
 	golang.org/x/tools v0.0.0-20190111214448-fc1d57b08d7b // indirect
 	gopkg.in/alecthomas/kingpin.v3-unstable v3.0.0-20180810215634-df19058c872c // indirect
-	gopkg.in/yaml.v2 v2.2.2 // indirect
+	gopkg.in/cheggaaa/pb.v1 v1.0.27
 	honnef.co/go/tools v0.0.0-20190109154334-5bcec433c8ea // indirect
 )
