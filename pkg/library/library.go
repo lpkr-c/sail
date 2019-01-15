@@ -20,6 +20,7 @@ var options = map[string]sketch.Renderable{
 	"delaunay/mesh":                delaunay.Mesh{},
 	"sampling/uniform-rectangle":   sampling.UniformRectangleDot{},
 	"sampling/radial-rectangle":    sampling.RadialRectangleDot{},
+	"sampling/dot-walk":            sampling.DotWalk{},
 	"primitive/line-coloring":      primitives.LineColoring{},
 	"primitive/bars":               primitives.Bars{},
 	"primitive/rotated-lines":      primitives.RotatedLines{},
