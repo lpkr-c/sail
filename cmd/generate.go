@@ -28,16 +28,29 @@ var generateCmd = &cobra.Command{
 	},
 }
 
+// bulkCmd represents the generate command
+var generateBulk = &cobra.Command{
+	Use:   "bulk",
+	Short: "renders the desired image many times",
+	Long: `generate takes the provided sketch and generates an image.
+	It uses the given seed, if iterations is provided along with seed,
+	seed takes precedence.`,
+	Args: cobra.ExactArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		iterations, _ := cmd.Flags().GetInt("iterations")
+		threads, _ := cmd.Flags().GetInt("threads")
+		fmt.Printf("Running for %d iterations with %d threads\n", iterations, threads)
+		err := renderer.RenderBulk(args[0], iterations, threads)
+		if err != nil {
+			fmt.Println(err)
+		}
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(generateCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// generateCmd.PersistentFlags().String("foo", "", "A help for foo")
-	generateCmd.PersistentFlags().Int64P("seed", "s", 0, "seed to greate sketch with")
-
-	// Cobra supports local flags which will only run when this command
-	// generateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	generateCmd.AddCommand(generateBulk)
+	generateCmd.Flags().Int64P("seed", "s", 0, "seed to greate sketch with")
+	generateBulk.Flags().IntP("iterations", "i", 300, "number of times to generate the sketch")
+	generateBulk.Flags().IntP("threads", "t", 16, "number of threads used to generate the sketch")
 }

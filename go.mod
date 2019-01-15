@@ -35,5 +35,6 @@ require (
 	golang.org/x/sys v0.0.0-20190109145017-48ac38b7c8cb // indirect
 	golang.org/x/tools v0.0.0-20190111214448-fc1d57b08d7b // indirect
 	gopkg.in/alecthomas/kingpin.v3-unstable v3.0.0-20180810215634-df19058c872c // indirect
+	gopkg.in/cheggaaa/pb.v1 v1.0.27
 	honnef.co/go/tools v0.0.0-20190109154334-5bcec433c8ea // indirect
 )
