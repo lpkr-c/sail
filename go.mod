@@ -3,6 +3,7 @@ module github.com/devinmcgloin/sail
 require (
 	github.com/alecthomas/gometalinter v2.0.12+incompatible // indirect
 	github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf // indirect
+	github.com/aws/aws-sdk-go v1.16.20
 	github.com/cosiner/argv v0.0.1 // indirect
 	github.com/davidrjenni/reftools v0.0.0-20180914123528-654d0ba4f96d // indirect
 	github.com/derekparker/delve v1.1.0 // indirect

@@ -43,6 +43,12 @@ func printf(level int, format string, values ...interface{}) {
 	}
 }
 
+func ErrorPrintf(format string, values ...interface{}) {
+	printf(ERROR, format, values...)
+}
+func WarnPrintf(format string, values ...interface{}) {
+	printf(WARN, format, values...)
+}
 func InfoPrintf(format string, values ...interface{}) {
 	printf(INFO, format, values...)
 }

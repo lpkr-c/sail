@@ -1,10 +1,10 @@
 package sampling
 
 import (
-	"fmt"
 	"math/rand"
 
 	"github.com/devinmcgloin/clr/clr"
+	"github.com/devinmcgloin/sail/pkg/slog"
 	"github.com/fogleman/gg"
 )
 
@@ -22,11 +22,7 @@ func (dw DotWalk) Draw(context *gg.Context, rand *rand.Rand) {
 	alpha := rand.Float64()*5 + 1
 	margin := rand.Float64()*200 + 10
 
-	fmt.Printf("\twalkers: %d\n", walkers)
-	fmt.Printf("\thue: %d\n", hue)
-	fmt.Printf("\tsteps: %d\n", steps)
-	fmt.Printf("\tradius: %f\n", radius)
-	fmt.Printf("\talpha: %f\n", alpha)
+	slog.InfoValues("walkers", walkers, "hue", hue, "steps", steps, "radius", radius, "alpha", alpha)
 
 	for walker := 0; walker < walkers; walker++ {
 		r, g, b := clr.HSV{H: hue, S: uint8(rand.Intn(walkers) * 10), V: 70}.RGB()
