@@ -1,12 +1,12 @@
 package delaunay
 
 import (
-	"fmt"
 	"log"
 	"math"
 	"math/rand"
 
 	"github.com/devinmcgloin/clr/clr"
+	"github.com/devinmcgloin/sail/pkg/slog"
 	"github.com/fogleman/delaunay"
 	"github.com/fogleman/gg"
 )
@@ -27,10 +27,7 @@ func (c Ring) Draw(context *gg.Context, rand *rand.Rand) {
 	radius := rand.Float64() * 300
 	minDistance := rand.Float64() * 500
 
-	fmt.Printf("\tpoints: %d\n", points)
-	fmt.Printf("\thue: %d\n", hue)
-	fmt.Printf("\tcenter: %f\n", center)
-	fmt.Printf("\tradius: %f\n", radius)
+	slog.InfoValues("points", points, "hue", hue, "center", center, "radius", radius, "min-distance", minDistance)
 
 	pointLocations := make([]delaunay.Point, points)
 	for i := range pointLocations {
@@ -68,8 +65,7 @@ func (m Mesh) Draw(context *gg.Context, rand *rand.Rand) {
 	yDelta := rand.Float64() * 150
 	relocateProbability := rand.NormFloat64()
 
-	fmt.Printf("\tpoints: %d\n", points)
-	fmt.Printf("\thue: %d\n", hue)
+	slog.InfoValues("points", points, "hue", hue, "x-delta", xDelta, "y-delta", yDelta, "relocate-probability", relocateProbability)
 
 	xWidth, yWidth := m.Dimensions()
 	pointLocations := make([]delaunay.Point, points)

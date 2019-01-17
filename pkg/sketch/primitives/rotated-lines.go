@@ -6,6 +6,7 @@ import (
 	"math/rand"
 
 	"github.com/devinmcgloin/clr/clr"
+	"github.com/devinmcgloin/sail/pkg/slog"
 	"github.com/fogleman/gg"
 )
 
@@ -23,6 +24,9 @@ func (rl RotatedLines) Draw(context *gg.Context, rand *rand.Rand) {
 
 	avaliableSpace := 1000 - margin*2
 	spacing := avaliableSpace / rows
+
+	slog.InfoValues("rows", rows, "margin", margin, "noise-factor", noiseFactor, "hue", hue)
+	slog.DebugValues("avaliable-space", avaliableSpace, "spacing", spacing)
 
 	context.SetColor(color.Black)
 	context.SetLineWidth(rand.Float64() * spacing)

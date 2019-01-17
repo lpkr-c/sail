@@ -4,6 +4,7 @@ import (
 	"math/rand"
 
 	"github.com/devinmcgloin/clr/clr"
+	"github.com/devinmcgloin/sail/pkg/slog"
 	"github.com/fogleman/gg"
 )
 
@@ -19,6 +20,7 @@ func (c Cloud) Draw(context *gg.Context, rand *rand.Rand) {
 	growthFactor := rand.Float64() * 50
 	minGrowth := rand.Float64() * 20
 
+	slog.InfoValues("rows", rows, "hue", hue, "growth-factor", growthFactor, "min-growth", minGrowth)
 	accrew := make([]float64, 100)
 	for i := range accrew {
 		accrew[i] = 100

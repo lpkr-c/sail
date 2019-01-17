@@ -9,6 +9,7 @@ import (
 
 	"github.com/devinmcgloin/sail/pkg/library"
 	"github.com/devinmcgloin/sail/pkg/sketch"
+	"github.com/devinmcgloin/sail/pkg/slog"
 	"github.com/fogleman/gg"
 	pb "gopkg.in/cheggaaa/pb.v1"
 )
@@ -28,7 +29,9 @@ func Render(sketchID string, seed int64) error {
 		return err
 	}
 
-	context := gg.NewContext(renderable.Dimensions())
+	xd, yd := renderable.Dimensions()
+	context := gg.NewContext(xd, yd)
+	slog.InfoPrintf("Rendering %T with dimesions (%d, %d) and seed %d\n", renderable, xd, yd, seed)
 	run(renderable, context, dir(sketchID), fmt.Sprintf("sketch-%d.png", seed), seed)
 	return nil
 }
@@ -63,8 +66,10 @@ func RenderBulk(sketchID string, count, threads int) error {
 	return nil
 }
 func process(bar *pb.ProgressBar, sketchID string, renderable sketch.Renderable, done chan bool, seeds chan int64) {
-	context := gg.NewContext(renderable.Dimensions())
+	xd, yd := renderable.Dimensions()
+	context := gg.NewContext(xd, yd)
 	for seed := range seeds {
+		slog.DebugPrintf("Rendering %T with dimesions (%d, %d) and seed: %d\n", renderable, xd, yd, seed)
 		run(renderable, context, dir(sketchID), fmt.Sprintf("sketch-%d.png", seed), seed)
 		bar.Increment()
 	}

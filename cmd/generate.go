@@ -2,9 +2,11 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/devinmcgloin/sail/pkg/renderer"
+	"github.com/devinmcgloin/sail/pkg/slog"
 	"github.com/spf13/cobra"
 )
 
@@ -17,11 +19,16 @@ var generateCmd = &cobra.Command{
 	seed takes precedence.`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+		level, err := cmd.Flags().GetInt("verbosity")
+		if err != nil {
+			log.Fatal(err)
+		}
+		slog.SetLevel(level)
 		seed, _ := cmd.Flags().GetInt64("seed")
 		if seed <= 0 {
 			seed = time.Now().Unix()
 		}
-		err := renderer.Render(args[0], seed)
+		err = renderer.Render(args[0], seed)
 		if err != nil {
 			fmt.Println(err)
 		}
@@ -37,6 +44,7 @@ var generateBulk = &cobra.Command{
 	seed takes precedence.`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+		slog.SetLevel(slog.ERROR)
 		iterations, _ := cmd.Flags().GetInt("iterations")
 		threads, _ := cmd.Flags().GetInt("threads")
 		fmt.Printf("Running for %d iterations with %d threads\n", iterations, threads)
@@ -51,6 +59,7 @@ func init() {
 	rootCmd.AddCommand(generateCmd)
 	generateCmd.AddCommand(generateBulk)
 	generateCmd.Flags().Int64P("seed", "s", 0, "seed to greate sketch with")
+	generateCmd.Flags().IntP("verbosity", "v", slog.INFO, "how verbose to be with logging")
 	generateBulk.Flags().IntP("iterations", "i", 300, "number of times to generate the sketch")
 	generateBulk.Flags().IntP("threads", "t", 16, "number of threads used to generate the sketch")
 }
