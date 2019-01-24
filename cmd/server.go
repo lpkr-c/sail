@@ -21,8 +21,10 @@ var serverCmd = &cobra.Command{
 		slog.SetLevel(slog.ERROR)
 		router := httprouter.New()
 		router.GET("/", index)
-		router.GET("/:category/:sketch", render)
-		router.GET("/:category/:sketch/:seed", render)
+		router.GET("/render/:category/:sketch", render)
+		router.GET("/render/:category/:sketch/:seed", render)
+		fs := http.Dir("sketches")
+		router.ServeFiles("/view/*filepath", fs)
 
 		log.Fatal(http.ListenAndServe(":8080", router))
 	},
@@ -37,9 +39,12 @@ func render(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	} else {
 		seed = hash(seedString)
 	}
+	log.Printf("Rendering %s with seed %d\n", sketchID, seed)
 	bytes, err := renderer.Render(sketchID, true, seed)
 	if err != nil {
 		fmt.Fprintf(w, "An Error Occured: %s\n", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 	w.WriteHeader(http.StatusOK)
 	w.Write(bytes.Bytes())
@@ -52,7 +57,11 @@ func index(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 func hash(s string) int64 {
 	h := fnv.New64a()
 	h.Write([]byte(s))
-	return int64(h.Sum64())
+	sum := h.Sum64()
+	if int64(sum) <= 0 {
+		return int64(sum) * -1
+	}
+	return int64(sum)
 }
 
 func init() {
