@@ -25,10 +25,10 @@ func path(sketchID string, seed int64) string {
 }
 
 // Render renders the given sketch to the filessystem with the provided seed
-func Render(sketchID string, backup bool, seed int64) error {
+func Render(sketchID string, backup bool, seed int64) (*bytes.Buffer, error) {
 	renderable, err := library.Lookup(sketchID)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	xd, yd := renderable.Dimensions()
@@ -38,7 +38,7 @@ func Render(sketchID string, backup bool, seed int64) error {
 	if err == nil && backup {
 		cloud.Upload(bytes, path(sketchID, seed))
 	}
-	return nil
+	return bytes, nil
 }
 
 // RenderBulk renders each sketch more efficiently

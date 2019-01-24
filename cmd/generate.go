@@ -33,7 +33,7 @@ var generateCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal(err)
 		}
-		err = renderer.Render(args[0], backup, seed)
+		_, err = renderer.Render(args[0], backup, seed)
 		if err != nil {
 			fmt.Println(err)
 		}
