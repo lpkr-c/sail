@@ -5,10 +5,10 @@ import (
 	"hash/fnv"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/devinmcgloin/sail/pkg/renderer"
-	"github.com/devinmcgloin/sail/pkg/slog"
 	"github.com/julienschmidt/httprouter"
 	"github.com/spf13/cobra"
 )
@@ -18,7 +18,7 @@ var serverCmd = &cobra.Command{
 	Use:   "server",
 	Short: "server spins up a webserver to generate images on the fly",
 	Run: func(cmd *cobra.Command, args []string) {
-		slog.SetLevel(slog.ERROR)
+		//slog.SetLevel(slog.ERROR)
 		router := httprouter.New()
 		router.GET("/", index)
 		router.GET("/render/:category/:sketch", render)
@@ -37,7 +37,12 @@ func render(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	if seedString == "" {
 		seed = time.Now().Unix()
 	} else {
-		seed = hash(seedString)
+		i, err := strconv.ParseInt(seedString, 0, 64)
+		if err != nil {
+			seed = hash(seedString)
+		} else {
+			seed = i
+		}
 	}
 	log.Printf("Rendering %s with seed %d\n", sketchID, seed)
 	bytes, err := renderer.Render(sketchID, true, seed)
