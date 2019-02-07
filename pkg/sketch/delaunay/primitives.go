@@ -22,7 +22,7 @@ func (c Ring) Dimensions() (int, int) {
 // Draw handles all the fundamental drawing logic
 func (c Ring) Draw(context *gg.Context, rand *rand.Rand) {
 	points := int(rand.Float64()*600) + 3
-	hue := uint16(rand.Intn(365))
+	hue := rand.Intn(365)
 	center := gg.Point{X: 700, Y: 700}
 	radius := rand.Float64() * 300
 	minDistance := rand.Float64() * 500
@@ -60,7 +60,7 @@ func (m Mesh) Dimensions() (int, int) {
 // Draw handles all the fundamental drawing logic
 func (m Mesh) Draw(context *gg.Context, rand *rand.Rand) {
 	points := int(rand.Float64()*600) + 3
-	hue := uint16(rand.Intn(365))
+	hue := rand.Intn(365)
 	xDelta := rand.Float64() * 150
 	yDelta := rand.Float64() * 150
 	relocateProbability := rand.NormFloat64()

@@ -16,7 +16,7 @@ func (dw DotWalk) Dimensions() (int, int) {
 
 func (dw DotWalk) Draw(context *gg.Context, rand *rand.Rand) {
 	walkers := rand.Intn(1000)
-	hue := uint16(rand.Intn(365))
+	hue := rand.Intn(365)
 	steps := rand.Intn(500)
 	radius := rand.Float64() + 1
 	alpha := rand.Float64()*5 + 1
@@ -25,7 +25,7 @@ func (dw DotWalk) Draw(context *gg.Context, rand *rand.Rand) {
 	slog.InfoValues("walkers", walkers, "hue", hue, "steps", steps, "radius", radius, "alpha", alpha)
 
 	for walker := 0; walker < walkers; walker++ {
-		r, g, b := clr.HSV{H: hue, S: uint8(rand.Intn(walkers) * 10), V: 70}.RGB()
+		r, g, b := clr.HSV{H: hue, S: rand.Intn(walkers) * 10, V: 70}.RGB()
 		context.SetRGB(float64(r), float64(g), float64(b))
 		xLimit, yLimit := dw.Dimensions()
 		x := rand.Float64()*(float64(xLimit)-margin*2) + margin

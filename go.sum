@@ -19,6 +19,8 @@ github.com/derekparker/delve v1.1.0 h1:icd65nMp7s2HiLz6y/6RCVXBdoED3xxYLwX09EMaR
 github.com/derekparker/delve v1.1.0/go.mod h1:pMSZMfp0Nhbm8qdZJkuE/yPGOkLpGXLS1I4poXQpuJU=
 github.com/devinmcgloin/clr v0.0.0-20181213201331-6a2038980199 h1:TrQTc6nkdPxvq9EjkvfztYr45PH3ABSW71U+yMwLRNE=
 github.com/devinmcgloin/clr v0.0.0-20181213201331-6a2038980199/go.mod h1:M6tpU7xRvtVr/Jdy34lfc0a9j2uyksSgFhucnfY/L4k=
+github.com/devinmcgloin/clr v0.0.0-20190207215756-94e76f7b8d9a h1:gUhRjUVJLnYCcDKeL2ZMZlwwycv7kZiH3VCT1OaA0P0=
+github.com/devinmcgloin/clr v0.0.0-20190207215756-94e76f7b8d9a/go.mod h1:M6tpU7xRvtVr/Jdy34lfc0a9j2uyksSgFhucnfY/L4k=
 github.com/devinmcgloin/probabilistic v1.0.0/go.mod h1:d3zhVIZlX7AvPkTgAMa4ZBAyoLst/CiM8ZuY1h1AG5c=
 github.com/fatih/camelcase v1.0.0 h1:hxNvNX/xYBp0ovncs8WyWZrOrpBNub/JfaMvbURyft8=
 github.com/fatih/camelcase v1.0.0/go.mod h1:yN2Sb0lFhZJUdVvtELVWefmrXpuZESvPmqwoZc+/fpc=
