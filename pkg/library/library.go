@@ -15,7 +15,9 @@ import (
 
 // Sketches defines all the sketches that the system can render
 var options = map[string]sketch.Renderable{
-	"accrew/clouds":                accrew.Cloud{},
+	"accrew/dot-clouds":            accrew.DotCloud{},
+	"accrew/disjoint-line-clouds":  accrew.DisjointLineCloud{},
+	"accrew/joint-line-clouds":     accrew.JointLineCloud{},
 	"accrew/dot-lines":             accrew.DotLines{},
 	"delaunay/ring":                delaunay.Ring{},
 	"delaunay/mesh":                delaunay.Mesh{},
