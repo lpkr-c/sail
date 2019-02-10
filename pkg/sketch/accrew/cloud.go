@@ -97,7 +97,7 @@ func (c JointLineCloud) Draw(context *gg.Context, rand *rand.Rand) {
 	deltas := make([]float64, 100)
 
 	for i := 0.0; i < rows; i++ {
-		r, g, b := clr.HSV{H: hue, S: int(i), V: 70}.RGB()
+		r, g, b := clr.HSV{H: hue, S: int((i / rows) * 100), V: 70}.RGB()
 		context.SetRGB(float64(r), float64(g), float64(b))
 		for i := range deltas {
 			deltas[i] = rand.Float64()*float64(rows)/growthFactor + minGrowth
