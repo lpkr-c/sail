@@ -1,1 +1,1 @@
-web: sail server
+web: sail server -p $PORT

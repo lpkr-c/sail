@@ -18,6 +18,7 @@ var serverCmd = &cobra.Command{
 	Use:   "server",
 	Short: "server spins up a webserver to generate images on the fly",
 	Run: func(cmd *cobra.Command, args []string) {
+		port, _ := cmd.Flags().GetInt64("port")
 		//slog.SetLevel(slog.ERROR)
 		router := httprouter.New()
 		router.GET("/", index)
@@ -26,7 +27,7 @@ var serverCmd = &cobra.Command{
 		fs := http.Dir("sketches")
 		router.ServeFiles("/view/*filepath", fs)
 
-		log.Fatal(http.ListenAndServe(":8080", router))
+		log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", port), router))
 	},
 }
 
@@ -70,5 +71,7 @@ func hash(s string) int64 {
 }
 
 func init() {
+
+	serverCmd.Flags().Int64P("port", "p", 8080, "port to bind server responses to")
 	rootCmd.AddCommand(serverCmd)
 }
