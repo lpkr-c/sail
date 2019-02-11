@@ -72,8 +72,8 @@ func RenderBulk(sketchID string, backup bool, count, threads int) error {
 }
 func process(bar *pb.ProgressBar, sketchID string, backup bool, renderable sketch.Renderable, done chan bool, seeds chan int64) {
 	xd, yd := renderable.Dimensions()
-	context := gg.NewContext(xd, yd)
 	for seed := range seeds {
+		context := gg.NewContext(xd, yd)
 		slog.DebugPrintf("Rendering %T with dimesions (%d, %d) and seed: %d\n", renderable, xd, yd, seed)
 		bytes, err := run(renderable, context, dir(sketchID), fmt.Sprintf("sketch-%d.png", seed), seed)
 		if err == nil && backup {

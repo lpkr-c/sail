@@ -108,6 +108,7 @@ func boundingBox(points []pointColor) (x, y gg.Point) {
 	}
 	return
 }
+
 func quadratic(x0, y0, x1, y1, x2, y2, t float64) (x, y float64) {
 	u := 1 - t
 	a := u * u
