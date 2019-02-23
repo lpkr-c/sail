@@ -2,10 +2,10 @@ package renderer
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"image/color"
 	"math/rand"
-	"os"
 	"time"
 
 	"github.com/devinmcgloin/sail/pkg/cloud"
@@ -15,10 +15,6 @@ import (
 	"github.com/fogleman/gg"
 	pb "gopkg.in/cheggaaa/pb.v1"
 )
-
-func dir(sketchID string) string {
-	return fmt.Sprintf("sketches/%s/", sketchID)
-}
 
 func path(sketchID string, seed int64) string {
 	return fmt.Sprintf("sketches/%s/sketch-%d.png", sketchID, seed)
@@ -32,11 +28,21 @@ func Render(sketchID string, backup bool, seed int64) (*bytes.Buffer, error) {
 	}
 
 	xd, yd := renderable.Dimensions()
-	context := gg.NewContext(xd, yd)
 	slog.InfoPrintf("Rendering %T with dimesions (%d, %d) and seed %d\n", renderable, xd, yd, seed)
-	bytes, err := run(renderable, context, dir(sketchID), fmt.Sprintf("sketch-%d.png", seed), seed)
+	slog.InfoValues("backup", backup)
+
+	context := gg.NewContext(xd, yd)
+	bytes, err := run(renderable, context, seed)
+	if err != nil {
+		slog.ErrorPrintf("error %+v\n", err)
+		return nil, err
+	}
 	if err == nil && backup {
 		cloud.Upload(bytes, path(sketchID, seed))
+	}
+	if bytes == nil {
+		slog.ErrorPrintf("error %+v\n", err)
+		return nil, errors.New("bytes was nil inside Render method")
 	}
 	return bytes, nil
 }
@@ -74,8 +80,7 @@ func process(bar *pb.ProgressBar, sketchID string, backup bool, renderable sketc
 	xd, yd := renderable.Dimensions()
 	for seed := range seeds {
 		context := gg.NewContext(xd, yd)
-		slog.DebugPrintf("Rendering %T with dimesions (%d, %d) and seed: %d\n", renderable, xd, yd, seed)
-		bytes, err := run(renderable, context, dir(sketchID), fmt.Sprintf("sketch-%d.png", seed), seed)
+		bytes, err := run(renderable, context, seed)
 		if err == nil && backup {
 			cloud.Upload(bytes, path(sketchID, seed))
 		}
@@ -90,25 +95,23 @@ func clearBackground(context *gg.Context) {
 	context.Fill()
 }
 
-func run(renderer sketch.Renderable, context *gg.Context, dir, filename string, seed int64) (*bytes.Buffer, error) {
+func run(renderer sketch.Renderable, context *gg.Context, seed int64) (*bytes.Buffer, error) {
 	rand := rand.New(rand.NewSource(seed))
 	clearBackground(context)
 
 	renderer.Draw(context, rand)
 
-	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		err = os.MkdirAll(dir, 0755)
-		if err != nil {
-			return nil, err
-		}
-	}
-	path := dir + filename
-
 	bytes := new(bytes.Buffer)
-
 	err := context.EncodePNG(bytes)
 	if err != nil {
+		slog.ErrorPrintf("Encoutered Error %s when encoding\n", err)
 		return nil, err
 	}
-	return bytes, context.SavePNG(path)
+
+	if bytes == nil {
+		slog.ErrorPrintf("bytes was nill when returning from run\n")
+		return nil, errors.New("bytes was nill when returning from run")
+	}
+
+	return bytes, nil
 }

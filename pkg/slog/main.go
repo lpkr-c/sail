@@ -1,7 +1,7 @@
 package slog
 
 import (
-	"fmt"
+	"log"
 )
 
 var slogLevel int
@@ -14,7 +14,7 @@ const (
 )
 
 func init() {
-	slogLevel = INFO
+	slogLevel = DEBUG
 }
 
 func SetLevel(level int) {
@@ -24,7 +24,7 @@ func SetLevel(level int) {
 func values(level int, fieldValues []interface{}) {
 	if level >= slogLevel {
 		for i := 0; i < len(fieldValues); i += 2 {
-			fmt.Printf("\t%s: %+v\n", fieldValues[i], fieldValues[i+1])
+			log.Printf("\t%s: %+v\n", fieldValues[i], fieldValues[i+1])
 		}
 	}
 }
@@ -39,7 +39,7 @@ func DebugValues(fieldValues ...interface{}) {
 
 func printf(level int, format string, values ...interface{}) {
 	if level >= slogLevel {
-		fmt.Printf(format, values...)
+		log.Printf(format, values...)
 	}
 }
 
@@ -52,7 +52,6 @@ func WarnPrintf(format string, values ...interface{}) {
 func InfoPrintf(format string, values ...interface{}) {
 	printf(INFO, format, values...)
 }
-
 func DebugPrintf(format string, values ...interface{}) {
 	printf(DEBUG, format, values...)
 }
