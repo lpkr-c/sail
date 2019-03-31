@@ -12,7 +12,7 @@ import (
 	"github.com/devinmcgloin/sail/pkg/slog"
 )
 
-func Handler(w http.ResponseWriter, r *http.Request) {
+func RenderHandler(w http.ResponseWriter, r *http.Request) {
 	sketchID := "delaunay/ring" //fmt.Sprintf("%s/%s", ps.ByName("category"), ps.ByName("sketch"))
 	seedString := ""            //ps.ByName("seed")
 	var seed int64

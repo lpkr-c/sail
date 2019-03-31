@@ -1,4 +1,7 @@
 {
   "version": 2,
-  "builds": [{ "src": "handlers/**/*.go", "use": "@now/go" }]
+  "builds": [
+    { "src": "list.go", "use": "@now/go" },
+    { "src": "render.go", "use": "@now/go" }
+  ]
 }
