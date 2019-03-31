@@ -1,5 +1,4 @@
 {
   "version": 2,
-  "builds": [{ "src": "lambda/**/index.go", "use": "@now/go" }],
-  "alias": ["art.devinmcgloin.com"]
+  "builds": [{ "src": "handlers/**/*.go", "use": "@now/go" }]
 }
