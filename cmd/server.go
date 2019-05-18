@@ -46,7 +46,7 @@ func render(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		}
 	}
 	log.Printf("Rendering %s with seed %d\n", sketchID, seed)
-	bytes, err := renderer.Render(sketchID, true, seed)
+	bytes, err := renderer.Render(sketchID, false, seed)
 	if err != nil {
 		fmt.Fprintf(w, "An Error Occured: %s\n", err)
 		w.WriteHeader(http.StatusInternalServerError)
