@@ -12,7 +12,7 @@ require (
 	github.com/fatih/gomodifytags v0.0.0-20180914191908-141225bf62b6 // indirect
 	github.com/fatih/motion v0.0.0-20180408211639-218875ebe238 // indirect
 	github.com/fogleman/delaunay v0.0.0-20180910191513-63f09b4c883d
-	github.com/fogleman/gg v1.1.0
+	github.com/fogleman/gg v1.3.0
 	github.com/go-delve/delve v1.2.0 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/golangci/golangci-lint v1.16.0 // indirect
