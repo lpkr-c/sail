@@ -29,7 +29,7 @@ require (
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/mattn/go-runewidth v0.0.4 // indirect
 	github.com/mdempsky/gocode v0.0.0-20190203001940-7fb65232883f // indirect
-	github.com/mitchellh/go-homedir v1.0.0
+	github.com/mitchellh/go-homedir v1.1.0
 	github.com/nicksnyder/go-i18n v1.10.0 // indirect
 	github.com/peterh/liner v1.1.0 // indirect
 	github.com/pkg/profile v1.3.0 // indirect
