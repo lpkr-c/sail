@@ -50,6 +50,6 @@ require (
 	golang.org/x/text v0.3.2 // indirect
 	golang.org/x/tools v0.0.0-20190503185657-3b6f9c0030f7 // indirect
 	gopkg.in/alecthomas/kingpin.v3-unstable v3.0.0-20180810215634-df19058c872c // indirect
-	gopkg.in/cheggaaa/pb.v1 v1.0.27
+	gopkg.in/cheggaaa/pb.v1 v1.0.28
 	honnef.co/go/tools v0.0.0-20190418001031-e561f6794a2a // indirect
 )
