@@ -8,7 +8,8 @@ require (
 	github.com/cpuguy83/go-md2man v1.0.10 // indirect
 	github.com/davidrjenni/reftools v0.0.0-20190411195930-981bbac422f8 // indirect
 	github.com/derekparker/delve v1.1.0 // indirect
-	github.com/devinmcgloin/clr v0.0.0-20190207215756-94e76f7b8d9a
+	github.com/devinmcgloin/clr v1.0.1
+	github.com/fatih/color v1.6.0
 	github.com/fatih/gomodifytags v0.0.0-20180914191908-141225bf62b6 // indirect
 	github.com/fatih/motion v0.0.0-20180408211639-218875ebe238 // indirect
 	github.com/fogleman/delaunay v0.0.0-20180910191513-63f09b4c883d
@@ -31,6 +32,7 @@ require (
 	github.com/mdempsky/gocode v0.0.0-20190203001940-7fb65232883f // indirect
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/nicksnyder/go-i18n v1.10.0 // indirect
+	github.com/ojrac/opensimplex-go v1.0.1
 	github.com/peterh/liner v1.1.0 // indirect
 	github.com/pkg/profile v1.3.0 // indirect
 	github.com/rogpeppe/godef v1.1.1 // indirect

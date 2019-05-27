@@ -38,6 +38,12 @@ github.com/devinmcgloin/clr v0.0.0-20181213201331-6a2038980199 h1:TrQTc6nkdPxvq9
 github.com/devinmcgloin/clr v0.0.0-20181213201331-6a2038980199/go.mod h1:M6tpU7xRvtVr/Jdy34lfc0a9j2uyksSgFhucnfY/L4k=
 github.com/devinmcgloin/clr v0.0.0-20190207215756-94e76f7b8d9a h1:gUhRjUVJLnYCcDKeL2ZMZlwwycv7kZiH3VCT1OaA0P0=
 github.com/devinmcgloin/clr v0.0.0-20190207215756-94e76f7b8d9a/go.mod h1:M6tpU7xRvtVr/Jdy34lfc0a9j2uyksSgFhucnfY/L4k=
+github.com/devinmcgloin/clr v0.0.0-20190527170604-475b8c87aa18 h1:/czj8oJQ/Su+r/Wz96p/5NKvxUEd1w7cFszlDBmwImk=
+github.com/devinmcgloin/clr v0.0.0-20190527170604-475b8c87aa18/go.mod h1:M6tpU7xRvtVr/Jdy34lfc0a9j2uyksSgFhucnfY/L4k=
+github.com/devinmcgloin/clr v1.0.0 h1:+nPrVxnP/MKETn/y6V7YGEzUTNx2Ne4PcD+kHSPwNYw=
+github.com/devinmcgloin/clr v1.0.0/go.mod h1:M6tpU7xRvtVr/Jdy34lfc0a9j2uyksSgFhucnfY/L4k=
+github.com/devinmcgloin/clr v1.0.1 h1:391257VWHVf6aBl+fdjXCVx2d1Oe+rByd+SxNNeDyms=
+github.com/devinmcgloin/clr v1.0.1/go.mod h1:M6tpU7xRvtVr/Jdy34lfc0a9j2uyksSgFhucnfY/L4k=
 github.com/devinmcgloin/probabilistic v1.0.0/go.mod h1:d3zhVIZlX7AvPkTgAMa4ZBAyoLst/CiM8ZuY1h1AG5c=
 github.com/fatih/camelcase v1.0.0 h1:hxNvNX/xYBp0ovncs8WyWZrOrpBNub/JfaMvbURyft8=
 github.com/fatih/camelcase v1.0.0/go.mod h1:yN2Sb0lFhZJUdVvtELVWefmrXpuZESvPmqwoZc+/fpc=
@@ -191,6 +197,8 @@ github.com/nbutton23/zxcvbn-go v0.0.0-20171102151520-eafdab6b0663 h1:Ri1EhipkbhW
 github.com/nbutton23/zxcvbn-go v0.0.0-20171102151520-eafdab6b0663/go.mod h1:o96djdrsSGy3AWPyBgZMAGfxZNfgntdJG+11KU4QvbU=
 github.com/nicksnyder/go-i18n v1.10.0 h1:5AzlPKvXBH4qBzmZ09Ua9Gipyruv6uApMcrNZdo96+Q=
 github.com/nicksnyder/go-i18n v1.10.0/go.mod h1:HrK7VCrbOvQoUAQ7Vpy7i87N7JZZZ7R2xBGjv0j365Q=
+github.com/ojrac/opensimplex-go v1.0.1 h1:XslvpLP6XqQSATUtsOnGBYtFPw7FQ6h6y0ihjVeOLHo=
+github.com/ojrac/opensimplex-go v1.0.1/go.mod h1:MoSgj04tZpH8U0RefZabnHV2AbLgv/2mo3hLJtWqSEs=
 github.com/onsi/ginkgo v0.0.0-20170829012221-11459a886d9c/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/gomega v0.0.0-20170829124025-dcabb60a477c/go.mod h1:C1qb7wdrVGGVU+Z6iS04AVkA3Q65CEZX59MT0QO5uiA=
