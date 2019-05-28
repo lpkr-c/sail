@@ -1,7 +1,7 @@
 module github.com/devinmcgloin/sail
 
 require (
-	github.com/aws/aws-sdk-go v1.19.38
+	github.com/aws/aws-sdk-go v1.19.37
 	github.com/devinmcgloin/clr v1.0.1
 	github.com/fatih/color v1.6.0 // indirect
 	github.com/fogleman/delaunay v0.0.0-20180910191513-63f09b4c883d
@@ -13,7 +13,7 @@ require (
 	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/mattn/go-runewidth v0.0.4 // indirect
 	github.com/spf13/cobra v0.0.4
-	github.com/spf13/viper v1.4.0
+	github.com/spf13/viper v1.3.2
 	github.com/stretchr/testify v1.3.0 // indirect
 	golang.org/x/image v0.0.0-20181116024801-cd38e8056d9b // indirect
 	golang.org/x/net v0.0.0-20190503192946-f4e77d36d62c // indirect
