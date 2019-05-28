@@ -41,6 +41,12 @@ func Lookup(sketchID string) (sketch.Renderable, error) {
 	return sketch, nil
 }
 
+// Exists returns true if the sketch is defined, false otherwise.
+func Exists(sketchID string) bool {
+	_, ok := options[sketchID]
+	return ok
+}
+
 // List prints all avaliable sketches
 func List(regex string) {
 	var sketchIDs []string

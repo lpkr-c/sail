@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/devinmcgloin/sail/pkg/library"
 	"github.com/devinmcgloin/sail/pkg/renderer"
 	"github.com/julienschmidt/httprouter"
 	"github.com/spf13/cobra"
@@ -33,6 +34,12 @@ var serverCmd = &cobra.Command{
 
 func render(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	sketchID := fmt.Sprintf("%s/%s", ps.ByName("category"), ps.ByName("sketch"))
+	if !library.Exists(sketchID) {
+		fmt.Fprintf(w, "Unable to load sketch: %s\n", sketchID)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
 	seedString := ps.ByName("seed")
 	var seed int64
 	if seedString == "" {
