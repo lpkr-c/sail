@@ -37,16 +37,17 @@ func (ss Skyspace) Draw(context *gg.Context, rand *rand.Rand) {
 	slog.InfoValues("dist", rectGradient.Distance(0, 0))
 	slog.InfoValues("dist", rectGradient.Distance(500, 500))
 
+	// Render background
 	context.SetFillStyle(rectGradient)
-	context.DrawRectangle(0, 0, 2000, 2000)
+	context.DrawRectangle(0, 0, 2000, 1400)
 	context.Fill()
 
-	linearGradient := gg.NewLinearGradient(300, 300, 1400, 800)
-	linearGradient.AddColorStop(0, center)
-	linearGradient.AddColorStop(1, center)
+	//linearGradient := gg.NewLinearGradient(300, 300, 1400, 800)
+	//linearGradient.AddColorStop(0, center)
+	//linearGradient.AddColorStop(1, center)
 
-	context.SetFillStyle(linearGradient)
-	context.DrawRoundedRectangle(300, 300, 1400, 800, 4)
+	//context.SetFillStyle(linearGradient)
+	//context.DrawRoundedRectangle(300, 300, 1400, 800, 4)
 	// context.DrawRoundedRectangle(0, 0, 100, 100, 4)
 
 	context.Fill()
