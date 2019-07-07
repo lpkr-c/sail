@@ -19,12 +19,12 @@ func (fr FallingRectangles) Dimensions() (int, int) {
 
 // Width helper for finding the width of the canvas
 func (fr FallingRectangles) Width() float64 {
-	return 800.0
+	return 12000.0
 }
 
 // Height helper for finding the hieght of the canvas
 func (fr FallingRectangles) Height() float64 {
-	return 1300.0
+	return 19500.0
 }
 
 // Draw is the primary rendering method
