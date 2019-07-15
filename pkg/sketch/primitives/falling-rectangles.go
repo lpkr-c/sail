@@ -29,14 +29,14 @@ func (fr FallingRectangles) Height() float64 {
 
 // Draw is the primary rendering method
 func (fr FallingRectangles) Draw(context *gg.Context, rand *rand.Rand) {
-	margin := rand.Float64()*(fr.Width()*0.1) + 10
+	margin := rand.Float64()*(fr.Width()*0.15) + fr.Width()*0.04
 
 	avaliableSpace := fr.Width() - margin*2
 	sizeFactor := math.Floor(rand.Float64()*25 + 5)
 	boxSize := avaliableSpace / sizeFactor
 	halfBox := boxSize / 2
 
-	noiseFactor := rand.Float64() * 2
+	noiseFactor := rand.Float64() * 4
 
 	context.SetLineWidth(fr.Width() * 0.001)
 	context.SetColor(color.Black)
@@ -51,11 +51,12 @@ func (fr FallingRectangles) Draw(context *gg.Context, rand *rand.Rand) {
 			if normalizedNoise > 1 {
 				slog.InfoValues("sectionOffset", sectionOffset, "normalizedNoise", normalizedNoise, "fr.Height() - margin", fr.Height()-margin)
 			}
-			adjustedNoise := normalizedNoise * (noiseFactor * 10)
+			adjustedNoise := normalizedNoise * noiseFactor
 			rotate := adjustedNoise * rand.NormFloat64()
 			context.Push()
 			context.RotateAbout(rotate, x, y)
-			context.Translate(rand.Float64()*sectionOffset*noiseFactor, rand.Float64()*sectionOffset*noiseFactor)
+			translationFactor := adjustedNoise * noiseFactor * fr.Height() * 0.01
+			context.Translate(rand.Float64()*translationFactor, rand.Float64()*translationFactor)
 			context.DrawRectangle(x-halfBox, y-halfBox, boxSize, boxSize)
 			context.Stroke()
 			context.Pop()
