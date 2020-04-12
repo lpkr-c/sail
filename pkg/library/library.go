@@ -33,6 +33,8 @@ var options = map[string]sketch.Renderable{
 	"gradients/skyspace":           gradients.Skyspace{},
 	"harmonograph/single":          harmonograph.Single{},
 	"harmonograph/dual":            harmonograph.Dual{},
+	"harmonograph/variable":        harmonograph.Variable{},
+	"harmonograph/offset":          harmonograph.Offset{},
 }
 
 // Lookup finds a sketch based on the sketchID
