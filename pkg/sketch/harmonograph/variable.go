@@ -166,7 +166,7 @@ func (v Offset) Dimensions() (int, int) {
 
 func (v Offset) Draw(context *gg.Context, rand *rand.Rand) {
 	timeStepSize := 0.0001
-	totalCycles := 10.0
+	totalCycles := 1.0
 
 	context.SetColor(color.Black)
 	context.SetLineWidth(1)
