@@ -10,6 +10,7 @@ import (
 	"github.com/devinmcgloin/sail/pkg/sketch/accrew"
 	"github.com/devinmcgloin/sail/pkg/sketch/delaunay"
 	"github.com/devinmcgloin/sail/pkg/sketch/gradients"
+	"github.com/devinmcgloin/sail/pkg/sketch/harmonograph"
 	"github.com/devinmcgloin/sail/pkg/sketch/primitives"
 	"github.com/devinmcgloin/sail/pkg/sketch/sampling"
 )
@@ -30,6 +31,8 @@ var options = map[string]sketch.Renderable{
 	"primitive/rotated-lines":      primitives.RotatedLines{},
 	"primitive/falling-rectangles": primitives.FallingRectangles{},
 	"gradients/skyspace":           gradients.Skyspace{},
+	"harmonograph/single":          harmonograph.Single{},
+	"harmonograph/dual":            harmonograph.Dual{},
 }
 
 // Lookup finds a sketch based on the sketchID
