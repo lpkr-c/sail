@@ -13,7 +13,6 @@ require (
 	github.com/mattn/go-runewidth v0.0.4 // indirect
 	github.com/spf13/cobra v0.0.7
 	github.com/spf13/viper v1.6.3
-	github.com/stretchr/testify v1.3.0 // indirect
 	golang.org/x/image v0.0.0-20181116024801-cd38e8056d9b // indirect
 	golang.org/x/sys v0.0.0-20190502175342-a43fa875dd82 // indirect
 	golang.org/x/text v0.3.2 // indirect
