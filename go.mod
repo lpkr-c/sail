@@ -1,7 +1,7 @@
 module github.com/devinmcgloin/sail
 
 require (
-	github.com/aws/aws-sdk-go v1.25.43
+	github.com/aws/aws-sdk-go v1.30.7
 	github.com/devinmcgloin/clr v1.0.1
 	github.com/fatih/color v1.6.0 // indirect
 	github.com/fogleman/delaunay v0.0.0-20180910191513-63f09b4c883d
