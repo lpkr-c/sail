@@ -41,8 +41,7 @@ func (v Single) Draw(context *gg.Context, rand *rand.Rand) {
 	slog.InfoValues("yFreq", yFreq,
 		"yPhase", yPhase,
 		"yAmp", yAmp,
-		"yDamp", yDamp,
-	)
+		"yDamp", yDamp)
 	context.Translate(canvas.W(context, 0.5), canvas.H(context, 0.5))
 
 	xLast := 0.0

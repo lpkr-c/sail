@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/devinmcgloin/sail/pkg/library"
@@ -21,6 +22,7 @@ var serverCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		port, _ := cmd.Flags().GetInt64("port")
 		//slog.SetLevel(slog.ERROR)
+		log.Printf("Serving requests at: http://localhost:%d\n", port)
 		router := httprouter.New()
 		router.GET("/", index)
 		router.GET("/render/:category/:sketch", render)
@@ -64,7 +66,8 @@ func render(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 }
 
 func index(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	fmt.Fprintf(w, "hello, %s!\n", ps.ByName("name"))
+	sketches := library.List(".*")
+	fmt.Fprintf(w, "Sail has the following sketches:\n%s", strings.Join(sketches, "\n"))
 }
 
 func hash(s string) int64 {
@@ -78,7 +81,6 @@ func hash(s string) int64 {
 }
 
 func init() {
-
 	serverCmd.Flags().Int64P("port", "p", 8080, "port to bind server responses to")
 	rootCmd.AddCommand(serverCmd)
 }

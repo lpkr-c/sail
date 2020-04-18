@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/devinmcgloin/sail/pkg/library"
 	"github.com/spf13/cobra"
 )
@@ -13,7 +15,10 @@ var listCmd = &cobra.Command{
 
 	Run: func(cmd *cobra.Command, args []string) {
 		regex, _ := cmd.Flags().GetString("regex")
-		library.List(regex)
+		sketches := library.List(regex)
+		for _, sketch := range sketches {
+			fmt.Printf("%s\n", sketch)
+		}
 	},
 }
 

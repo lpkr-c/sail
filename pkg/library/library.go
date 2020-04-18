@@ -53,14 +53,10 @@ func Exists(sketchID string) bool {
 }
 
 // List prints all avaliable sketches
-func List(regex string) {
+func List(regex string) []string {
 	var sketchIDs []string
 
 	for sketchID := range options {
-		sketchIDs = append(sketchIDs, sketchID)
-	}
-	sort.Strings(sketchIDs)
-	for _, sketchID := range sketchIDs {
 		matched, err := regexp.MatchString(regex, sketchID)
 		if err != nil {
 			fmt.Printf("%s -> %s\n", sketchID, err)
@@ -68,7 +64,9 @@ func List(regex string) {
 		}
 
 		if matched && err == nil {
-			fmt.Printf("%s\n", sketchID)
+			sketchIDs = append(sketchIDs, sketchID)
 		}
 	}
+	sort.Strings(sketchIDs)
+	return sketchIDs
 }
