@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"sort"
 
+	"github.com/devinmcgloin/sail/pkg/renderer"
 	"github.com/devinmcgloin/sail/pkg/sketch"
 	"github.com/devinmcgloin/sail/pkg/sketch/accrew"
 	"github.com/devinmcgloin/sail/pkg/sketch/delaunay"
@@ -15,8 +16,10 @@ import (
 	"github.com/devinmcgloin/sail/pkg/sketch/sampling"
 )
 
-// Sketches defines all the sketches that the system can render
-var options = map[string]sketch.Renderable{
+var SVGOptions = map[string]sketch.Plotable{}
+
+// PNGOptions defines all the sketches that the system can render
+var PNGOptions = map[string]sketch.Renderable{
 	"accrew/dot-clouds":            accrew.DotCloud{},
 	"accrew/disjoint-line-clouds":  accrew.DisjointLineCloud{},
 	"accrew/joint-line-clouds":     accrew.JointLineCloud{},
@@ -38,25 +41,44 @@ var options = map[string]sketch.Renderable{
 }
 
 // Lookup finds a sketch based on the sketchID
-func Lookup(sketchID string) (sketch.Renderable, error) {
-	sketch, ok := options[sketchID]
+func Lookup(sketchID string) (renderer.Runner, error) {
+	// PNGSketch, ok := SVGOptions[sketchID]
+	// if ok {
+	// 	return renderer.SVGRunner{Sketch: PNGSketch}, nil
+	// }
+
+	SVGSketch, ok := PNGOptions[sketchID]
 	if !ok {
 		return nil, errors.New("invalid sketch ID")
 	}
-	return sketch, nil
+	return renderer.PNGRunner{Sketch: SVGSketch}, nil
 }
 
 // Exists returns true if the sketch is defined, false otherwise.
 func Exists(sketchID string) bool {
-	_, ok := options[sketchID]
-	return ok
+	_, PNGExists := PNGOptions[sketchID]
+	_, SVGExists := SVGOptions[sketchID]
+
+	return PNGExists || SVGExists
 }
 
 // List prints all avaliable sketches
 func List(regex string) []string {
 	var sketchIDs []string
 
-	for sketchID := range options {
+	for sketchID := range PNGOptions {
+		matched, err := regexp.MatchString(regex, sketchID)
+		if err != nil {
+			fmt.Printf("%s -> %s\n", sketchID, err)
+			continue
+		}
+
+		if matched && err == nil {
+			sketchIDs = append(sketchIDs, sketchID)
+		}
+	}
+
+	for sketchID := range SVGOptions {
 		matched, err := regexp.MatchString(regex, sketchID)
 		if err != nil {
 			fmt.Printf("%s -> %s\n", sketchID, err)

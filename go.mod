@@ -6,6 +6,7 @@ require (
 	github.com/fatih/color v1.6.0 // indirect
 	github.com/fogleman/delaunay v0.0.0-20180910191513-63f09b4c883d
 	github.com/fogleman/gg v1.3.0
+	github.com/fogleman/ln v0.0.0-20170223135521-12e6c6e74459
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/julienschmidt/httprouter v1.3.0
 	github.com/mattn/go-colorable v0.1.1 // indirect
