@@ -28,7 +28,7 @@ type PNGRunner struct {
 
 type SVGRunner struct {
 	Sketch   sketch.Plotable
-	context  *ln.Scene
+	paths    ln.Paths
 	SketchID string
 }
 
@@ -75,25 +75,53 @@ func clearBackground(context *gg.Context) {
 	context.Fill()
 }
 
-// func (svgRunner SVGRunner) Dimensions() (width, height int) {
-// 	return svgRunner.sketch.Dimensions()
-// }
+// Render renders the given sketch to the filessystem with the provided seed
+func (s *SVGRunner) Render(seed int64) (*bytes.Buffer, error) {
+	xd, yd := s.Dimensions()
+	context := &ln.Scene{}
 
-// // Render renders the given sketch to the filessystem with the provided seed
-// func (svgRunner SVGRunner) Render(seed int64) (*bytes.Buffer, error) {
-// 	xd, yd := svgRunner.Dimensions()
-// 	context := gg.NewContext(xd, yd)
+	slog.InfoPrintf("Rendering %T with dimesions (%d, %d) and seed %d\n", s.Sketch, xd, yd, seed)
+	rand := rand.New(rand.NewSource(seed))
 
-// 	slog.InfoPrintf("Rendering %T with dimesions (%d, %d) and seed %d\n", pngRender.sketch, xd, yd, seed)
-// 	rand := rand.New(rand.NewSource(seed))
-// 	clearBackground(context)
+	s.Sketch.Draw(context, rand)
 
-// 	pngRender.sketch.Draw(context, rand)
-// 	bytes := new(bytes.Buffer)
+	eye := ln.Vector{4, 3, 2}    // camera position
+	center := ln.Vector{0, 0, 0} // camera looks at
+	up := ln.Vector{0, 0, 1}
 
-// 	err := context.EncodePNG(bytes)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return bytes, nil
-// }
+	fovy := 50.0 // vertical field of view, degrees
+	znear := 0.1 // near z plane
+	zfar := 10.0 // far z plane
+	step := s.Sketch.Step()
+
+	paths := context.Render(eye, center, up, float64(xd), float64(yd), fovy, znear, zfar, step)
+	s.paths = paths
+	bytes := new(bytes.Buffer)
+
+	svg := paths.ToSVG(float64(xd), float64(yd))
+
+	_, err := bytes.WriteString(svg)
+	if err != nil {
+		return nil, err
+	}
+	return bytes, nil
+}
+
+func (s *SVGRunner) Write(seed int64) error {
+	path := s.Path(seed)
+	xd, yd := s.Dimensions()
+
+	return s.paths.WriteToSVG(path, float64(xd), float64(yd))
+}
+
+func (s *SVGRunner) Dimensions() (width, height int) {
+	return s.Sketch.Dimensions()
+}
+
+func (s *SVGRunner) Directory() string {
+	return fmt.Sprintf("sketches/%s/", s.SketchID)
+}
+
+func (s *SVGRunner) Path(seed int64) string {
+	return fmt.Sprintf("sketches/%s/sketch-%d.svg", s.SketchID, seed)
+}

@@ -15,7 +15,9 @@ import (
 	"github.com/devinmcgloin/sail/pkg/sketch/sampling"
 )
 
-var SVGOptions = map[string]sketch.Plotable{}
+var SVGOptions = map[string]sketch.Plotable{
+	"primitive/boxes": primitives.Boxes{},
+}
 
 // PNGOptions defines all the sketches that the system can render
 var PNGOptions = map[string]sketch.Renderable{
@@ -41,16 +43,16 @@ var PNGOptions = map[string]sketch.Renderable{
 
 // Lookup finds a sketch based on the sketchID
 func Lookup(sketchID string) (Runner, error) {
-	// PNGSketch, ok := SVGOptions[sketchID]
-	// if ok {
-	// 	return renderer.SVGRunner{Sketch: PNGSketch}, nil
-	// }
+	SVGSketch, ok := SVGOptions[sketchID]
+	if ok {
+		return &SVGRunner{Sketch: SVGSketch, SketchID: sketchID}, nil
+	}
 
-	SVGSketch, ok := PNGOptions[sketchID]
+	PNGSketch, ok := PNGOptions[sketchID]
 	if !ok {
 		return nil, errors.New("invalid sketch ID")
 	}
-	return &PNGRunner{Sketch: SVGSketch, SketchID: sketchID}, nil
+	return &PNGRunner{Sketch: PNGSketch, SketchID: sketchID}, nil
 }
 
 // Exists returns true if the sketch is defined, false otherwise.
