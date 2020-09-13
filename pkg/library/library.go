@@ -6,7 +6,6 @@ import (
 	"regexp"
 	"sort"
 
-	"github.com/devinmcgloin/sail/pkg/renderer"
 	"github.com/devinmcgloin/sail/pkg/sketch"
 	"github.com/devinmcgloin/sail/pkg/sketch/accrew"
 	"github.com/devinmcgloin/sail/pkg/sketch/delaunay"
@@ -41,7 +40,7 @@ var PNGOptions = map[string]sketch.Renderable{
 }
 
 // Lookup finds a sketch based on the sketchID
-func Lookup(sketchID string) (renderer.Runner, error) {
+func Lookup(sketchID string) (Runner, error) {
 	// PNGSketch, ok := SVGOptions[sketchID]
 	// if ok {
 	// 	return renderer.SVGRunner{Sketch: PNGSketch}, nil
@@ -51,7 +50,7 @@ func Lookup(sketchID string) (renderer.Runner, error) {
 	if !ok {
 		return nil, errors.New("invalid sketch ID")
 	}
-	return renderer.PNGRunner{Sketch: SVGSketch}, nil
+	return &PNGRunner{Sketch: SVGSketch, SketchID: sketchID}, nil
 }
 
 // Exists returns true if the sketch is defined, false otherwise.

@@ -1,4 +1,4 @@
-package renderer
+package library
 
 import (
 	"bytes"
@@ -23,17 +23,17 @@ type Runner interface {
 type PNGRunner struct {
 	Sketch   sketch.Renderable
 	context  *gg.Context
-	sketchID string
+	SketchID string
 }
 
 type SVGRunner struct {
 	Sketch   sketch.Plotable
 	context  *ln.Scene
-	sketchID string
+	SketchID string
 }
 
 // Render renders the given sketch to the filessystem with the provided seed
-func (pngRender PNGRunner) Render(seed int64) (*bytes.Buffer, error) {
+func (pngRender *PNGRunner) Render(seed int64) (*bytes.Buffer, error) {
 	xd, yd := pngRender.Dimensions()
 	context := gg.NewContext(xd, yd)
 	pngRender.context = context
@@ -52,21 +52,21 @@ func (pngRender PNGRunner) Render(seed int64) (*bytes.Buffer, error) {
 	return bytes, nil
 }
 
-func (pngRunner PNGRunner) Write(seed int64) error {
+func (pngRunner *PNGRunner) Write(seed int64) error {
 	path := pngRunner.Path(seed)
 	return pngRunner.context.SavePNG(path)
 }
 
-func (pngRunner PNGRunner) Dimensions() (width, height int) {
+func (pngRunner *PNGRunner) Dimensions() (width, height int) {
 	return pngRunner.Sketch.Dimensions()
 }
 
-func (p PNGRunner) Directory() string {
-	return fmt.Sprintf("sketches/%s/", p.sketchID)
+func (p *PNGRunner) Directory() string {
+	return fmt.Sprintf("sketches/%s/", p.SketchID)
 }
 
-func (p PNGRunner) Path(seed int64) string {
-	return fmt.Sprintf("sketches/%s/sketch-%d.png", p.sketchID, seed)
+func (p *PNGRunner) Path(seed int64) string {
+	return fmt.Sprintf("sketches/%s/sketch-%d.png", p.SketchID, seed)
 }
 
 func clearBackground(context *gg.Context) {
